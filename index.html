@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<style>
+h1 {
+    font-family: helvetica, arial, sans-serif;
+    text-align: center;
+  }
+  
+  body {
+    width: 640px;
+    margin: 0 auto;
+  }
+  
+  .image-container {
+    position: relative;
+    display: block;
+    width: 640px;
+    height: 480px;
+  }
+  
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px;
+    height: 300px;
+    background-color: rgba(0,0,0,0);
+  }
+  
+  button {
+    border: 0;
+    background: rgba(150,150,150,0.6);
+    text-shadow: 1px 1px 1px white;
+    border: 1px solid #999;
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    left: 2px;
+  }
+  
+  .thumbnail-bar img {
+    display: block;
+    width: 20%;
+    float: left;
+    cursor: pointer;
+  }
+</style>
+    <title>Image gallery</title>
+  </head>
+  <body>
+    <h1><b><u>IMAGE GALLERY</u></b></h1>
+
+    <div class="image-container">
+      <center><img class="main-img" src="images/pic1.jpg" alt="Random pics" width="500" height="300"></center>
+      <div class="image-overlay"></div>
+      <button class="dark-mode">Darken</button>
+    </div>
+
+    <div class="thumbnail-bar">
+      
+    </div>
+    <script>
+const mainImage = document.querySelector('.main-img');
+const thumbnailContainer = document.querySelector('.thumbnail-bar');
+const galleryImages = document.querySelectorAll('.thumbnail-bar img')
+
+const toggleBtn = document.querySelector('button');
+const shadingOverlay = document.querySelector('.image-overlay');
+
+const imgFiles = ['images/pic1.jpg','images/pic2.jpg','images/pic3.jpg','images/pic4.jpg','images/pic5.jpg'];
+
+const imgAltText = ['photo1','photo2','photo3','photo4','photo5'];
+const imgCount = imgFiles.length;
+
+for (let i = 0; i < imgCount; i++) {
+    const thumbImage = document.createElement('img');
+    thumbImage.setAttribute('src', imgFiles[i]);
+    thumbImage.setAttribute('alt', imgAltText[i]);
+    thumbnailContainer.appendChild(thumbImage);
+    thumbImage.addEventListener('click', function(e){
+        mainImage.setAttribute('src', e.target.src);
+    })
+}
+
+galleryImages.forEach(img => {
+    img.addEventListener('click', function(){
+        mainImage.setAttribute('src', img.src);
+    })
+})
+
+toggleBtn.addEventListener('click', () => {
+    const btnState = toggleBtn.getAttribute('class');
+    if (btnState === 'dark-mode') {
+      toggleBtn.setAttribute('class','light-mode');
+      toggleBtn.textContent = 'Lighten';
+      shadingOverlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    } else {
+      toggleBtn.setAttribute('class','dark-mode');
+      toggleBtn.textContent = 'Darken';
+      shadingOverlay.style.backgroundColor = 'rgba(0,0,0,0)';
+    }
+});
+</script>
+  </body>
+</html>
